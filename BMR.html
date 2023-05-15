@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>BMR計算器</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>BMR計算器</h1>
+	<form>
+		<label>性別：</label>
+		<input type="radio" name="gender" value="male" checked> 男性
+		<input type="radio" name="gender" value="female"> 女性
+		<br>
+		<label>年齡：</label>
+		<input type="number" name="age" required>
+		<br>
+		<label>身高（公分）：</label>
+		<input type="number" name="height" required>
+		<br>
+		<label>體重（公斤）：</label>
+		<input type="number" name="weight" required>
+		<br>
+		<label>活動水平：</label>
+		<select name="activityLevel" required>
+			<option value="">請選擇</option>
+			<option value="1.2">非常低</option>
+			<option value="1.375">低</option>
+			<option value="1.55">中等</option>
+			<option value="1.725">高</option>
+			<option value="1.9">非常高</option>
+		</select>
+		<br>
+		<br>
+		<input type="submit" name="bmr" value="計算BMR">
+		<div id="bmr-result"></div>
+	</form>
+	<script>
+		// 取得表單元素
+		const form = document.querySelector('form');
+		const result = document.querySelector('#bmr-result');
+
+		// 監聽表單提交事件
+		form.addEventListener('submit', (event) => {
+			// 取消預設行為
+			event.preventDefault();
+
+			// 取得表單輸入值
+			const gender = form.elements['gender'].value;
+			const age = parseInt(form.elements['age'].value);
+			const height = parseInt(form.elements['height'].value);
+			const weight = parseInt(form.elements['weight'].value);
+			const activityLevel = parseFloat(form.elements['activityLevel'].value);
+
+			// 計算BMR
+			let bmr;
+			if (gender === 'male') {
+				bmr = 66 + (13.7 * weight) + (5 * height) - (6.8 * age);
+			} else {
+				bmr = 655 + (9.6 * weight) + (1.8 * height) - (4.7 * age);
+			}
+
+			// 乘以活動水平
+			const tdee = bmr * activityLevel;
+
+			// 顯示結果
+			result.innerHTML = `<p>您的BMR是：${bmr.toFixed(2)}千卡</p><p>您的TDEE是：${tdee.toFixed(2)}千卡</p>`;
+		});
+	</script>
+</body>
+</html>
