@@ -1092,3 +1092,12 @@ section {
     padding-right: 20px 15px;
   }
 }
+
+
+
+
+
+.resized-image {
+  width: 400px; /* 調整為你需要的寬度 */
+  height:300px; /* 讓高度按比例自動調整 */
+}
